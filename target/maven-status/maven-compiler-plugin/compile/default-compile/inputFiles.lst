@@ -1,0 +1,6 @@
+/home/javier/workspace/weather-backend/src/main/java/com/redbee/weather/service/IUsuarioService.java
+/home/javier/workspace/weather-backend/src/main/java/com/redbee/weather/controller/UsuarioRestController.java
+/home/javier/workspace/weather-backend/src/main/java/com/redbee/weather/service/UsuarioServiceImpl.java
+/home/javier/workspace/weather-backend/src/main/java/com/redbee/weather/model/dao/IUsuarioDAO.java
+/home/javier/workspace/weather-backend/src/main/java/com/redbee/weather/WeatherBackendApplication.java
+/home/javier/workspace/weather-backend/src/main/java/com/redbee/weather/model/entity/Usuario.java

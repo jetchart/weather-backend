@@ -16,49 +16,49 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.redbee.weather.model.entity.Usuario;
-import com.redbee.weather.service.IUsuarioService;
+import com.redbee.weather.model.entity.Location;
+import com.redbee.weather.service.ILocationService;
 
 @RestController
 @RequestMapping("/api")
 //@CrossOrigin (origins = {"http://localhost:4200"})
 @CrossOrigin ()
-public class UsuarioRestController {
+public class LocationRestController {
 
 	@Autowired
-	IUsuarioService usuarioService;
+	ILocationService locationService;
 		
-	@GetMapping("/users")
-	public List<Usuario> index() {
-		return usuarioService.findAll();
+	@GetMapping("/locations")
+	public List<Location> index() {
+		return locationService.findAll();
 	}
 
-	@GetMapping("/users/{id}")
-	public Usuario show(@PathVariable Long id) {
-		return this.usuarioService.findById(id);
+	@GetMapping("/locations/{id}")
+	public Location show(@PathVariable Long id) {
+		return this.locationService.findById(id);
 	}
 
-	@PostMapping("/users")
+	@PostMapping("/locations")
 	@ResponseStatus(HttpStatus.CREATED)
-	public Usuario create(@RequestBody Usuario usuario) {
-		usuario.setCreateAt(new Date());
-		this.usuarioService.save(usuario);
-		return usuario;
+	public Location create(@RequestBody Location location) {
+		location.setCreateAt(new Date());
+		this.locationService.save(location);
+		return location;
 	}
 
-	@PutMapping("/users/{id}")
+	@PutMapping("/locations/{id}")
 	@ResponseStatus(HttpStatus.CREATED)
-	public Usuario update(@RequestBody Usuario usuario, @PathVariable Long id) {
-		Usuario currentUsuario = this.usuarioService.findById(id);
-		currentUsuario.setNombre(usuario.getNombre());
-		currentUsuario.setApellido(usuario.getApellido());
-		this.usuarioService.save(currentUsuario);
-		return currentUsuario;
+	public Location update(@RequestBody Location location, @PathVariable Long id) {
+		Location currentLocation = this.locationService.findById(id);
+		currentLocation.setNombre(location.getNombre());
+		currentLocation.setWoeid(location.getWoeid());
+		this.locationService.save(currentLocation);
+		return currentLocation;
 	}
 
-	@DeleteMapping("/users/{id}")
+	@DeleteMapping("/locations/{id}")
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	public void delete(@PathVariable Long id) {
-		this.usuarioService.deleteById(id);
+		this.locationService.deleteById(id);
 	}
 }
