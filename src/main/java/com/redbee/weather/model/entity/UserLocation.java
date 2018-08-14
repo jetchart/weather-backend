@@ -1,28 +1,30 @@
 package com.redbee.weather.model.entity;
 
 import java.io.Serializable;
-import java.util.Date;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
+import javax.persistence.ManyToOne;
 
 @Entity
-public class Usuario implements Serializable {
+public class UserLocation implements Serializable {
 
-	private static final long serialVersionUID = -6292341942816977255L;
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -1399394809972858735L;
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id;
-	@JoinColumn(name = "user_id")
-	private Usuario user;
-	@JoinColumn(name = "location_id")
+	@ManyToOne	
+    @JoinColumn(name = "user_id")
+	private User user;
+    @ManyToOne
+    @JoinColumn(name = "location_id")
 	private Location location;
 	
 	public Long getId() {
@@ -31,10 +33,10 @@ public class Usuario implements Serializable {
 	public void setId(Long id) {
 		this.id = id;
 	}
-	public void setUser(Usuario usuario) {
-		this.usuario = usuario;
+	public void setUser(User user) {
+		this.user = user;
 	}
-	public Usuario getUser() {
+	public User getUser() {
 		return user;
 	}
 	public void setLocation(Location location) {

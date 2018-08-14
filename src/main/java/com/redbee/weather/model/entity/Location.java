@@ -14,6 +14,11 @@ import javax.persistence.TemporalType;
 @Entity
 public class Location implements Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -2731311784563812187L;
+	
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id;

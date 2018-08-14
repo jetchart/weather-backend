@@ -12,7 +12,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 @Entity
-public class Usuario implements Serializable {
+public class User implements Serializable {
 
 	private static final long serialVersionUID = -6292341942816977255L;
 	
