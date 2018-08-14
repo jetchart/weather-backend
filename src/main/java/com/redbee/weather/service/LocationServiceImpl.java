@@ -38,4 +38,9 @@ public class LocationServiceImpl implements ILocationService {
 		locationDAO.deleteById(id);
 	}
 
+	@Override
+	public List<Location> findByNombreContaining(String nombre) {
+		return locationDAO.findByNombreContaining(nombre);
+	}
+
 }

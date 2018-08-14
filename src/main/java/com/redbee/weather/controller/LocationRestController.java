@@ -61,4 +61,9 @@ public class LocationRestController {
 	public void delete(@PathVariable Long id) {
 		this.locationService.deleteById(id);
 	}
+	
+	@GetMapping("/locations/nombre/{nombre}")
+	public List<Location> findLocationsByName(@PathVariable String nombre) {
+		return this.locationService.findByNombre(nombre);
+	}
 }

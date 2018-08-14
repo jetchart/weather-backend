@@ -10,5 +10,6 @@ public interface ILocationService {
 	public Location findById(Long id);
 	public Location save(Location location);
 	public void deleteById(Long id);
+	public List<Location> findByNombreContaining(String nombre);
 	
 }
