@@ -1,9 +1,9 @@
 Manifest-Version: 1.0
 Implementation-Title: weather-backend
 Implementation-Version: 0.0.1-SNAPSHOT
-Built-By: jetchart
+Built-By: javier
 Implementation-Vendor-Id: com.redbee.weather-backend
-Build-Jdk: 1.8.0_181
+Build-Jdk: 1.8.0_131
 Implementation-URL: https://projects.spring.io/spring-boot/#/spring-bo
  ot-starter-parent/weather-backend
 Created-By: Maven Integration for Eclipse

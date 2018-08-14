@@ -95,6 +95,7 @@ public class UsuarioRestController {
 		user.setId(userId);
 		Location location = new Location();
 		location.setId(locationId);
+		System.out.println(userId + " " + locationId);
 		UserLocation userLocation = this.usuarioService.findLocationByUserAndLocation(user, location);
 		this.usuarioService.deleteByUserAndLocation(userLocation.getUser(), userLocation.getLocation());
 	}

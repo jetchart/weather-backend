@@ -50,7 +50,7 @@ public class UsuarioServiceImpl implements IUsuarioService {
 
 	@Override
 	public UserLocation findLocationByUserAndLocation(User user, Location location) {
-		return userLocationDAO.findLocationByUserAndLocation(user, location);
+		return userLocationDAO.findByUserAndLocation(user, location);
 	}
 
 	@Override
@@ -59,13 +59,14 @@ public class UsuarioServiceImpl implements IUsuarioService {
 	}
 
 	@Override
+	@Transactional(readOnly=false)
 	public void deleteByUserAndLocation(User user, Location location) {
 		userLocationDAO.deleteByUserAndLocation(user, location);
 	}
 	
 	@Override
 	public UserLocation save(UserLocation userLocation) {
-		UserLocation userLocationNew = userLocationDAO.findLocationByUserAndLocation(userLocation.getUser(), userLocation.getLocation());
+		UserLocation userLocationNew = userLocationDAO.findByUserAndLocation(userLocation.getUser(), userLocation.getLocation());
 		 if (userLocationNew == null) {
 			 return userLocationDAO.save(userLocation); 
 		 } 

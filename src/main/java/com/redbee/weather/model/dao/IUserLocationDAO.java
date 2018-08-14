@@ -12,7 +12,7 @@ public interface IUserLocationDAO extends CrudRepository<UserLocation, Long>{
 
 //	@Query("SELECT ul FROM UserLocation ul WHERE ul.user = :user")
 	public List<UserLocation> findLocationsByUser(User user);
-	public UserLocation findLocationByUserAndLocation(User user, Location location);
+	public UserLocation findByUserAndLocation(User user, Location location);
 	public void deleteByUser(User user);
 	public void deleteByUserAndLocation(User user, Location location);
 	
