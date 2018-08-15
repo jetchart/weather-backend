@@ -21,6 +21,9 @@ import com.redbee.weather.model.entity.User;
 import com.redbee.weather.model.entity.UserLocation;
 import com.redbee.weather.service.IUsuarioService;
 
+import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
+
 @RestController
 @RequestMapping("/api")
 //@CrossOrigin (origins = {"http://localhost:4200"})
@@ -31,12 +34,12 @@ public class UsuarioRestController {
 	IUsuarioService usuarioService;
 		
 	@GetMapping("/users")
-	public List<User> getUsers() {
+	public Flux<User> getUsers() {
 		return usuarioService.findAll();
 	}
 
 	@GetMapping("/users/{id}")
-	public User getUserById(@PathVariable Long id) {
+	public Mono<User> getUserById(@PathVariable Long id) {
 		return this.usuarioService.findById(id);
 	}
 
@@ -50,11 +53,11 @@ public class UsuarioRestController {
 
 	@PutMapping("/users/{id}")
 	@ResponseStatus(HttpStatus.CREATED)
-	public User update(@RequestBody User usuario, @PathVariable Long id) {
-		User currentUsuario = this.usuarioService.findById(id);
-		currentUsuario.setNombre(usuario.getNombre());
-		currentUsuario.setApellido(usuario.getApellido());
-		this.usuarioService.save(currentUsuario);
+	public Mono<User> update(@RequestBody User usuario, @PathVariable Long id) {
+		Mono<User> currentUsuario = this.usuarioService.findById(id);
+//		currentUsuario.setNombre(usuario.getNombre());
+//		currentUsuario.setApellido(usuario.getApellido());
+//		this.usuarioService.save(currentUsuario);
 		return currentUsuario;
 	}
 
@@ -65,14 +68,14 @@ public class UsuarioRestController {
 	}
 	
 	@GetMapping("/users/{userId}/locations/")
-	public List<UserLocation> findLocationsByUserId(@PathVariable Long userId) {
+	public List<UserLocation> findLocationsByUserId(@PathVariable String userId) {
 		User user = new User();
 		user.setId(userId);
 		return this.usuarioService.findLocationsByUser(user);
 	}
 	
 	@GetMapping("/users/{userId}/locations/{locationId}")
-	public UserLocation findLocationByUserAndLocation(@PathVariable Long userId, @PathVariable Long locationId) {
+	public UserLocation findLocationByUserAndLocation(@PathVariable String userId, @PathVariable Long locationId) {
 		User user = new User();
 		user.setId(userId);
 		Location location = new Location();
@@ -82,7 +85,7 @@ public class UsuarioRestController {
 	
 	@DeleteMapping("/users/{userId}/locations")
 	@ResponseStatus(HttpStatus.NO_CONTENT)
-	public void deleteUserLocationsByUser(@PathVariable Long userId) {
+	public void deleteUserLocationsByUser(@PathVariable String userId) {
 		User user = new User();
 		user.setId(userId);
 		this.usuarioService.deleteByUser(user);
@@ -90,7 +93,7 @@ public class UsuarioRestController {
 	
 	@DeleteMapping("/users/{userId}/locations/{locationId}")
 	@ResponseStatus(HttpStatus.NO_CONTENT)
-	public void deleteByUserAndLocation(@PathVariable Long userId, @PathVariable Long locationId) {
+	public void deleteByUserAndLocation(@PathVariable String userId, @PathVariable Long locationId) {
 		User user = new User();
 		user.setId(userId);
 		Location location = new Location();

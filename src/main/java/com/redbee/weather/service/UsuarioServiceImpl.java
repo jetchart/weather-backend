@@ -1,7 +1,6 @@
 package com.redbee.weather.service;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,28 +12,30 @@ import com.redbee.weather.model.entity.Location;
 import com.redbee.weather.model.entity.User;
 import com.redbee.weather.model.entity.UserLocation;
 
+import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
+
 @Service
 public class UsuarioServiceImpl implements IUsuarioService {
 
 	@Autowired
 	IUsuarioDAO usuarioDAO;
-	@Autowired
+//	@Autowired
 	IUserLocationDAO userLocationDAO;
 	
 	@Override
 	@Transactional(readOnly=true)
-	public List<User> findAll() {
-		return (List<User>) usuarioDAO.findAll();
+	public Flux<User> findAll() {
+		return usuarioDAO.findAll();
 	}
 
 	@Override
-	public User findById(Long id) {
-		Optional<User> o = usuarioDAO.findById(id);
-		return o.get();
+	public Mono<User> findById(Long id) {
+		return usuarioDAO.findById(id);
 	}
 
 	@Override
-	public User save(User usuario) {
+	public Mono<User> save(User usuario) {
 		return usuarioDAO.save(usuario);
 	}
 
@@ -68,7 +69,7 @@ public class UsuarioServiceImpl implements IUsuarioService {
 	public UserLocation save(UserLocation userLocation) {
 		UserLocation userLocationNew = userLocationDAO.findByUserAndLocation(userLocation.getUser(), userLocation.getLocation());
 		 if (userLocationNew == null) {
-			 return userLocationDAO.save(userLocation); 
+//			 return userLocationDAO.save(userLocation); 
 		 } 
 		 return userLocationNew;
 	}

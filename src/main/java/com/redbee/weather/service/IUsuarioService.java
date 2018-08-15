@@ -6,11 +6,14 @@ import com.redbee.weather.model.entity.Location;
 import com.redbee.weather.model.entity.User;
 import com.redbee.weather.model.entity.UserLocation;
 
+import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
+
 public interface IUsuarioService {
 
-	public List<User> findAll();
-	public User findById(Long id);
-	public User save(User usuario);
+	public Flux<User> findAll();
+	public Mono<User> findById(Long id);
+	public Mono<User> save(User usuario);
 	public void deleteById(Long id);	
 	public List<UserLocation> findLocationsByUser(User user);
 	public UserLocation findLocationByUserAndLocation(User user, Location location);

@@ -64,6 +64,7 @@ public class LocationRestController {
 	
 	@GetMapping("/locations/nombre/{nombre}")
 	public List<Location> findLocationsByName(@PathVariable String nombre) {
-		return this.locationService.findByNombre(nombre);
+		return null;
+//		return this.locationService.findByNombre(nombre);
 	}
 }

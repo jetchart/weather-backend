@@ -13,34 +13,32 @@ import com.redbee.weather.model.entity.Location;
 @Service
 public class LocationServiceImpl implements ILocationService {
 
-	@Autowired
-	ILocationDAO locationDAO;
-	
 	@Override
-	@Transactional(readOnly=true)
 	public List<Location> findAll() {
-		return (List<Location>) locationDAO.findAll();
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	@Override
 	public Location findById(Long id) {
-		Optional<Location> o = locationDAO.findById(id);
-		return o.get();
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	@Override
 	public Location save(Location location) {
-		return locationDAO.save(location);
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	@Override
 	public void deleteById(Long id) {
-		locationDAO.deleteById(id);
+		// TODO Auto-generated method stub
+		
 	}
 
 	@Override
 	public List<Location> findByNombreContaining(String nombre) {
-		return locationDAO.findByNombreContaining(nombre);
-	}
-
-}
+		// TODO Auto-generated method stub
+		return null;
+	}}

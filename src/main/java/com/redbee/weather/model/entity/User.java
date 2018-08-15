@@ -11,28 +11,26 @@ import javax.persistence.Id;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-@Entity
-public class User implements Serializable {
+import org.springframework.data.mongodb.core.mapping.Document;
 
-	private static final long serialVersionUID = -6292341942816977255L;
+@Document(collection="users")
+public class User {
 	
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	private Long id;
-	@Column
+	private String id;
+
 	private String username;
-	@Column
+
 	private String nombre;
-	@Column
+
 	private String apellido;
-	@Column(name="create_at")
-	@Temporal(TemporalType.DATE)
+
 	private Date createAt;
 	
-	public Long getId() {
+	public String getId() {
 		return id;
 	}
-	public void setId(Long id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 	public String getUsername() {
