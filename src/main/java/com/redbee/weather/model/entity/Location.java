@@ -3,15 +3,11 @@ package com.redbee.weather.model.entity;
 import java.io.Serializable;
 import java.util.Date;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 
-@Entity
+import org.springframework.data.mongodb.core.mapping.Document;
+
+@Document(collection="locations")
 public class Location implements Serializable {
 
 	/**
@@ -20,20 +16,15 @@ public class Location implements Serializable {
 	private static final long serialVersionUID = -2731311784563812187L;
 	
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	private Long id;
-	@Column
+	private String id;
 	private String nombre;
-	@Column
 	private String woeid;
-	@Column(name="create_at")
-	@Temporal(TemporalType.DATE)
 	private Date createAt;
 	
-	public Long getId() {
+	public String getId() {
 		return id;
 	}
-	public void setId(Long id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 	public String getNombre() {

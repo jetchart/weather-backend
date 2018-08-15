@@ -2,14 +2,12 @@ package com.redbee.weather.model.entity;
 
 import java.io.Serializable;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 
-@Entity
+import org.springframework.data.mongodb.core.mapping.DBRef;
+import org.springframework.data.mongodb.core.mapping.Document;
+
+@Document(collection="userLocations")
 public class UserLocation implements Serializable {
 
 	/**
@@ -18,19 +16,16 @@ public class UserLocation implements Serializable {
 	private static final long serialVersionUID = -1399394809972858735L;
 	
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	private Long id;
-	@ManyToOne	
-    @JoinColumn(name = "user_id")
+	private String id;
+	@DBRef
 	private User user;
-    @ManyToOne
-    @JoinColumn(name = "location_id")
+	@DBRef
 	private Location location;
 	
-	public Long getId() {
+	public String getId() {
 		return id;
 	}
-	public void setId(Long id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 	public void setUser(User user) {

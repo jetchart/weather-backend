@@ -2,13 +2,14 @@ package com.redbee.weather.model.dao;
 
 import java.util.List;
 
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.mongodb.repository.ReactiveMongoRepository;
 
 import com.redbee.weather.model.entity.Location;
 
-public interface ILocationDAO {
-//public interface ILocationDAO extends CrudRepository<Location, Long>{
+import reactor.core.publisher.Flux;
 
-	public List<Location> findByNombreContaining(String nombre);
+public interface ILocationDAO extends ReactiveMongoRepository<Location, String>{
+
+	public Flux<Location> findByNombreContaining(String nombre);
 	
 }

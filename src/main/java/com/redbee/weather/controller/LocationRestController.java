@@ -19,6 +19,9 @@ import org.springframework.web.bind.annotation.RestController;
 import com.redbee.weather.model.entity.Location;
 import com.redbee.weather.service.ILocationService;
 
+import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
+
 @RestController
 @RequestMapping("/api")
 //@CrossOrigin (origins = {"http://localhost:4200"})
@@ -29,42 +32,40 @@ public class LocationRestController {
 	ILocationService locationService;
 		
 	@GetMapping("/locations")
-	public List<Location> index() {
+	public Flux<Location> index() {
 		return locationService.findAll();
 	}
 
 	@GetMapping("/locations/{id}")
-	public Location show(@PathVariable Long id) {
+	public Mono<Location> show(@PathVariable String id) {
 		return this.locationService.findById(id);
 	}
 
 	@PostMapping("/locations")
 	@ResponseStatus(HttpStatus.CREATED)
-	public Location create(@RequestBody Location location) {
+	public Mono<Location> create(@RequestBody Location location) {
 		location.setCreateAt(new Date());
-		this.locationService.save(location);
-		return location;
+		return this.locationService.save(location);
 	}
 
 	@PutMapping("/locations/{id}")
 	@ResponseStatus(HttpStatus.CREATED)
-	public Location update(@RequestBody Location location, @PathVariable Long id) {
-		Location currentLocation = this.locationService.findById(id);
-		currentLocation.setNombre(location.getNombre());
-		currentLocation.setWoeid(location.getWoeid());
-		this.locationService.save(currentLocation);
+	public Mono<Location> update(@RequestBody Location location, @PathVariable String id) {
+		Mono<Location> currentLocation = this.locationService.findById(id);
+//		currentLocation.setNombre(location.getNombre());
+//		currentLocation.setWoeid(location.getWoeid());
+//		this.locationService.save(currentLocation);
 		return currentLocation;
 	}
 
 	@DeleteMapping("/locations/{id}")
 	@ResponseStatus(HttpStatus.NO_CONTENT)
-	public void delete(@PathVariable Long id) {
+	public void delete(@PathVariable String id) {
 		this.locationService.deleteById(id);
 	}
 	
 	@GetMapping("/locations/nombre/{nombre}")
-	public List<Location> findLocationsByName(@PathVariable String nombre) {
-		return null;
-//		return this.locationService.findByNombre(nombre);
+	public Flux<Location> findLocationsByName(@PathVariable String nombre) {
+		return this.locationService.findByNombreContaining(nombre);
 	}
 }

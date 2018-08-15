@@ -1,7 +1,5 @@
 package com.redbee.weather.service;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,7 +18,7 @@ public class UsuarioServiceImpl implements IUsuarioService {
 
 	@Autowired
 	IUsuarioDAO usuarioDAO;
-//	@Autowired
+	@Autowired
 	IUserLocationDAO userLocationDAO;
 	
 	@Override
@@ -30,7 +28,7 @@ public class UsuarioServiceImpl implements IUsuarioService {
 	}
 
 	@Override
-	public Mono<User> findById(Long id) {
+	public Mono<User> findById(String id) {
 		return usuarioDAO.findById(id);
 	}
 
@@ -40,17 +38,17 @@ public class UsuarioServiceImpl implements IUsuarioService {
 	}
 
 	@Override
-	public void deleteById(Long id) {
-		usuarioDAO.deleteById(id);
+	public Mono<Void> deleteById(String id) {
+		return usuarioDAO.deleteById(id);
 	}
 
 	@Override
-	public List<UserLocation> findLocationsByUser(User user) {
-		return userLocationDAO.findLocationsByUser(user);
+	public Flux<UserLocation> findLocationsByUser(String userId) {
+		return userLocationDAO.findLocationsByUser(userId);
 	}
 
 	@Override
-	public UserLocation findLocationByUserAndLocation(User user, Location location) {
+	public Mono<UserLocation> findLocationByUserAndLocation(User user, Location location) {
 		return userLocationDAO.findByUserAndLocation(user, location);
 	}
 
@@ -60,16 +58,15 @@ public class UsuarioServiceImpl implements IUsuarioService {
 	}
 
 	@Override
-	@Transactional(readOnly=false)
-	public void deleteByUserAndLocation(User user, Location location) {
-		userLocationDAO.deleteByUserAndLocation(user, location);
+	public Mono<Void> deleteUserLocationById(String id) {
+		return userLocationDAO.deleteById(id);
 	}
 	
 	@Override
-	public UserLocation save(UserLocation userLocation) {
-		UserLocation userLocationNew = userLocationDAO.findByUserAndLocation(userLocation.getUser(), userLocation.getLocation());
-		 if (userLocationNew == null) {
-//			 return userLocationDAO.save(userLocation); 
+	public Mono<UserLocation> save(UserLocation userLocation) {
+		Mono<UserLocation> userLocationNew = userLocationDAO.findByUserAndLocation(userLocation.getUser(), userLocation.getLocation());
+		 if (userLocationNew.hasElement() != null) {
+			 return userLocationDAO.save(userLocation); 
 		 } 
 		 return userLocationNew;
 	}

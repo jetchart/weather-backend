@@ -1,8 +1,9 @@
 package com.redbee.weather.controller;
 
 import java.util.Date;
-import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.redbee.weather.model.entity.Location;
 import com.redbee.weather.model.entity.User;
 import com.redbee.weather.model.entity.UserLocation;
+import com.redbee.weather.service.ILocationService;
 import com.redbee.weather.service.IUsuarioService;
 
 import reactor.core.publisher.Flux;
@@ -32,28 +34,32 @@ public class UsuarioRestController {
 
 	@Autowired
 	IUsuarioService usuarioService;
+	@Autowired
+	ILocationService locationService;
 		
+	private static final Logger log = LoggerFactory.getLogger(UsuarioRestController.class);
+	
 	@GetMapping("/users")
 	public Flux<User> getUsers() {
-		return usuarioService.findAll();
+        Flux<User> users = usuarioService.findAll();
+        return users;
 	}
 
 	@GetMapping("/users/{id}")
-	public Mono<User> getUserById(@PathVariable Long id) {
+	public Mono<User> getUserById(@PathVariable String id) {
 		return this.usuarioService.findById(id);
 	}
 
 	@PostMapping("/users")
 	@ResponseStatus(HttpStatus.CREATED)
-	public User create(@RequestBody User usuario) {
+	public Mono<User> create(@RequestBody User usuario) {
 		usuario.setCreateAt(new Date());
-		this.usuarioService.save(usuario);
-		return usuario;
+		return this.usuarioService.save(usuario);
 	}
 
 	@PutMapping("/users/{id}")
 	@ResponseStatus(HttpStatus.CREATED)
-	public Mono<User> update(@RequestBody User usuario, @PathVariable Long id) {
+	public Mono<User> update(@RequestBody User usuario, @PathVariable String id) {
 		Mono<User> currentUsuario = this.usuarioService.findById(id);
 //		currentUsuario.setNombre(usuario.getNombre());
 //		currentUsuario.setApellido(usuario.getApellido());
@@ -63,19 +69,21 @@ public class UsuarioRestController {
 
 	@DeleteMapping("/users/{id}")
 	@ResponseStatus(HttpStatus.NO_CONTENT)
-	public void delete(@PathVariable Long id) {
-		this.usuarioService.deleteById(id);
+	public Mono<Void> deleteById(@PathVariable String id) {
+		log.info("Eliminar: " + id);
+		return this.usuarioService.deleteById(id);
 	}
 	
 	@GetMapping("/users/{userId}/locations/")
-	public List<UserLocation> findLocationsByUserId(@PathVariable String userId) {
+	public Flux<UserLocation> findLocationsByUserId(@PathVariable String userId) {
 		User user = new User();
 		user.setId(userId);
-		return this.usuarioService.findLocationsByUser(user);
+		log.info("findLocationsByUserId: " + userId);
+		return this.usuarioService.findLocationsByUser(userId);
 	}
 	
 	@GetMapping("/users/{userId}/locations/{locationId}")
-	public UserLocation findLocationByUserAndLocation(@PathVariable String userId, @PathVariable Long locationId) {
+	public Mono<UserLocation> findLocationByUserAndLocation(@PathVariable String userId, @PathVariable String locationId) {
 		User user = new User();
 		user.setId(userId);
 		Location location = new Location();
@@ -91,21 +99,16 @@ public class UsuarioRestController {
 		this.usuarioService.deleteByUser(user);
 	}
 	
-	@DeleteMapping("/users/{userId}/locations/{locationId}")
+	@DeleteMapping("/users/locations/{id}")
 	@ResponseStatus(HttpStatus.NO_CONTENT)
-	public void deleteByUserAndLocation(@PathVariable String userId, @PathVariable Long locationId) {
-		User user = new User();
-		user.setId(userId);
-		Location location = new Location();
-		location.setId(locationId);
-		System.out.println(userId + " " + locationId);
-		UserLocation userLocation = this.usuarioService.findLocationByUserAndLocation(user, location);
-		this.usuarioService.deleteByUserAndLocation(userLocation.getUser(), userLocation.getLocation());
+	public Mono<Void> deleteUserLocationById(@PathVariable String id) {
+		log.info("deleteUserLocationById:" + id);
+		return this.usuarioService.deleteUserLocationById(id);
 	}
 	
 	@PostMapping("/users/locations")
 	@ResponseStatus(HttpStatus.CREATED)
-	public UserLocation save(@RequestBody UserLocation userLocation) {
+	public Mono<UserLocation> save(@RequestBody UserLocation userLocation) {
 		return this.usuarioService.save(userLocation);
 	}
 	
