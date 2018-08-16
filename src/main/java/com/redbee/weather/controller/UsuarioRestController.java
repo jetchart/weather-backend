@@ -17,9 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.redbee.weather.model.entity.Location;
 import com.redbee.weather.model.entity.User;
-import com.redbee.weather.model.entity.UserLocation;
 import com.redbee.weather.service.ILocationService;
 import com.redbee.weather.service.IUsuarioService;
 
@@ -73,44 +71,5 @@ public class UsuarioRestController {
 		log.info("Eliminar: " + id);
 		return this.usuarioService.deleteById(id);
 	}
-	
-	@GetMapping("/users/{userId}/locations/")
-	public Flux<UserLocation> findLocationsByUserId(@PathVariable String userId) {
-		User user = new User();
-		user.setId(userId);
-		log.info("findLocationsByUserId: " + userId);
-		return this.usuarioService.findLocationsByUser(userId);
-	}
-	
-	@GetMapping("/users/{userId}/locations/{locationId}")
-	public Mono<UserLocation> findLocationByUserAndLocation(@PathVariable String userId, @PathVariable String locationId) {
-		User user = new User();
-		user.setId(userId);
-		Location location = new Location();
-		location.setId(locationId);
-		return this.usuarioService.findLocationByUserAndLocation(user, location);
-	}
-	
-	@DeleteMapping("/users/{userId}/locations")
-	@ResponseStatus(HttpStatus.NO_CONTENT)
-	public void deleteUserLocationsByUser(@PathVariable String userId) {
-		User user = new User();
-		user.setId(userId);
-		this.usuarioService.deleteByUser(user);
-	}
-	
-	@DeleteMapping("/users/locations/{id}")
-	@ResponseStatus(HttpStatus.NO_CONTENT)
-	public Mono<Void> deleteUserLocationById(@PathVariable String id) {
-		log.info("deleteUserLocationById:" + id);
-		return this.usuarioService.deleteUserLocationById(id);
-	}
-	
-	@PostMapping("/users/locations")
-	@ResponseStatus(HttpStatus.CREATED)
-	public Mono<UserLocation> save(@RequestBody UserLocation userLocation) {
-		return this.usuarioService.save(userLocation);
-	}
-	
 	
 }

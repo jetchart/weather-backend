@@ -4,11 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.redbee.weather.model.dao.IUserLocationDAO;
 import com.redbee.weather.model.dao.IUsuarioDAO;
-import com.redbee.weather.model.entity.Location;
 import com.redbee.weather.model.entity.User;
-import com.redbee.weather.model.entity.UserLocation;
 
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
@@ -18,8 +15,6 @@ public class UsuarioServiceImpl implements IUsuarioService {
 
 	@Autowired
 	IUsuarioDAO usuarioDAO;
-	@Autowired
-	IUserLocationDAO userLocationDAO;
 	
 	@Override
 	@Transactional(readOnly=true)
@@ -40,35 +35,6 @@ public class UsuarioServiceImpl implements IUsuarioService {
 	@Override
 	public Mono<Void> deleteById(String id) {
 		return usuarioDAO.deleteById(id);
-	}
-
-	@Override
-	public Flux<UserLocation> findLocationsByUser(String userId) {
-		return userLocationDAO.findLocationsByUser(userId);
-	}
-
-	@Override
-	public Mono<UserLocation> findLocationByUserAndLocation(User user, Location location) {
-		return userLocationDAO.findByUserAndLocation(user, location);
-	}
-
-	@Override
-	public void deleteByUser(User user) {
-		 userLocationDAO.deleteByUser(user);
-	}
-
-	@Override
-	public Mono<Void> deleteUserLocationById(String id) {
-		return userLocationDAO.deleteById(id);
-	}
-	
-	@Override
-	public Mono<UserLocation> save(UserLocation userLocation) {
-		Mono<UserLocation> userLocationNew = userLocationDAO.findByUserAndLocation(userLocation.getUser(), userLocation.getLocation());
-		 if (userLocationNew.hasElement() != null) {
-			 return userLocationDAO.save(userLocation); 
-		 } 
-		 return userLocationNew;
 	}
 
 }

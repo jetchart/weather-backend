@@ -1,7 +1,5 @@
 package com.redbee.weather.model.dao;
 
-import java.util.List;
-
 import org.springframework.data.mongodb.repository.ReactiveMongoRepository;
 
 import com.redbee.weather.model.entity.Location;
