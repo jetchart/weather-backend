@@ -7,7 +7,7 @@ import javax.persistence.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-@Document(collection="userLocations")
+@Document(collection="boardLocations")
 public class BoardLocation implements Serializable {
 
 	/**

@@ -34,8 +34,8 @@ public class BoardLocationRestController {
 	IBoardLocationService boardLocationService;
 
 	@GetMapping("/boards/{boardId}/locations")
-	public Flux<BoardLocation> findByBoard(@PathVariable String boardId) {
-		log.info("findByBoard: " + boardId);
+	public Flux<BoardLocation> findByBoardLocations(@PathVariable String boardId) {
+		log.info("findByBoards: " + boardId);
 		return this.boardLocationService.findByBoard(boardId);
 	}
 	
@@ -57,8 +57,8 @@ public class BoardLocationRestController {
 
 	@DeleteMapping("/boards/locations/{id}")
 	@ResponseStatus(HttpStatus.NO_CONTENT)
-	public void delete(@PathVariable String id) {
-		this.boardLocationService.deleteById(id);
+	public Mono<Void> delete(@PathVariable String id) {
+		return this.boardLocationService.deleteById(id);
 	}
 	
 
