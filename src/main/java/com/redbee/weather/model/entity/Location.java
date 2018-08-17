@@ -18,6 +18,7 @@ public class Location implements Serializable {
 	private String id;
 	private String nombre;
 	private String woeid;
+	private String pubDate;
 	private String chill ;
 	private String humidity;
 	private String visibility;
@@ -25,6 +26,8 @@ public class Location implements Serializable {
 	private String text;
 	private Date createAt;
 	private Date updateAt;
+	
+	public final static Integer celsius = 32;
 	
 	public String getId() {
 		return id;
@@ -85,6 +88,12 @@ public class Location implements Serializable {
 	}
 	public void setUpdateAt(Date updateAt) {
 		this.updateAt = updateAt;
+	}
+	public String getPubDate() {
+		return pubDate;
+	}
+	public void setPubDate(String pubDate) {
+		this.pubDate = pubDate;
 	}
 		
 }

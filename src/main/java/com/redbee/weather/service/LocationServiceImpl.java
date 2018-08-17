@@ -29,6 +29,7 @@ public class LocationServiceImpl implements ILocationService {
 	}
 
 	@Override
+	@Transactional(readOnly=false)
 	public Mono<Location> save(Location location) {
 		if (location.getId() != null) {
 			location.setUpdateAt(new Date());
@@ -45,6 +46,11 @@ public class LocationServiceImpl implements ILocationService {
 	@Override
 	public Flux<Location> findByNombreContaining(String nombre) {
 		return locationDAO.findByNombreContaining(nombre);
+	}
+
+	@Override
+	public Mono<Location> findByWoeid(String woeid) {
+		return locationDAO.findByWoeid(woeid);
 	}
 
 }
