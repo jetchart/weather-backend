@@ -11,7 +11,7 @@ public interface ILocationService {
 	public Mono<Location> findById(String id);
 	public Mono<Location> findByWoeid(String woeid);
 	public Mono<Location> save(Location location);
-	public void deleteById(String id);
-	public Flux<Location> findByNombreContaining(String nombre);
+	public Mono<Void> deleteById(String id);
+	public Flux<Location> findByNameContaining(String name);
 	
 }

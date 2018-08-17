@@ -2,8 +2,6 @@ package com.redbee.weather.controller;
 
 import java.util.Date;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -28,15 +26,13 @@ import reactor.core.publisher.Mono;
 @RequestMapping("/api")
 //@CrossOrigin (origins = {"http://localhost:4200"})
 @CrossOrigin ()
-public class UsuarioRestController {
+public class UserRestController {
 
 	@Autowired
 	IUsuarioService usuarioService;
 	@Autowired
 	ILocationService locationService;
 		
-	private static final Logger log = LoggerFactory.getLogger(UsuarioRestController.class);
-	
 	@GetMapping("/users")
 	public Flux<User> getUsers() {
         Flux<User> users = usuarioService.findAll();
@@ -68,7 +64,6 @@ public class UsuarioRestController {
 	@DeleteMapping("/users/{id}")
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	public Mono<Void> deleteById(@PathVariable String id) {
-		log.info("Eliminar: " + id);
 		return this.usuarioService.deleteById(id);
 	}
 	

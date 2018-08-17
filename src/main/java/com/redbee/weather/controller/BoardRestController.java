@@ -1,7 +1,5 @@
 package com.redbee.weather.controller;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -27,8 +25,6 @@ import reactor.core.publisher.Mono;
 @CrossOrigin ()
 public class BoardRestController {
 
-	private static final Logger log = LoggerFactory.getLogger(BoardRestController.class);
-	
 	@Autowired
 	IBoardService boardService;
 
@@ -61,7 +57,6 @@ public class BoardRestController {
 	@DeleteMapping("/boards/{id}")
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	public Mono<Void> delete(@PathVariable String id) {
-		log.info("delete: " + id);
 		return this.boardService.deleteById(id);
 	}
 	

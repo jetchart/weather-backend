@@ -1,17 +1,5 @@
 package com.redbee.weather.controller;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.Reader;
-import java.io.StringWriter;
-import java.io.Writer;
-import java.net.Proxy;
-import java.net.URL;
-import java.net.URLConnection;
-import java.util.Date;
-
-import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -68,13 +56,13 @@ public class LocationRestController {
 
 	@DeleteMapping("/locations/{id}")
 	@ResponseStatus(HttpStatus.NO_CONTENT)
-	public void delete(@PathVariable String id) {
-		this.locationService.deleteById(id);
+	public Mono<Void> delete(@PathVariable String id) {
+		return this.locationService.deleteById(id);
 	}
 	
 	@GetMapping("/locations/nombre/{nombre}")
-	public Flux<Location> findLocationsByName(@PathVariable String nombre) {
-		return this.locationService.findByNombreContaining(nombre);
+	public Flux<Location> findLocationsByName(@PathVariable String name) {
+		return this.locationService.findByNameContaining(name);
 	}
 
 }

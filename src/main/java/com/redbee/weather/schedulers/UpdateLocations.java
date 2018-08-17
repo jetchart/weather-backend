@@ -50,7 +50,7 @@ public class UpdateLocations {
 			try {
 			JSONObject root = jsonRoot.getJSONObject(i);
 			String temperatureUnit = root.getJSONObject("units").get("temperature").toString();
-			String nombre = root.getJSONObject("location").get("city").toString();
+			String name = root.getJSONObject("location").get("city").toString();
 			String chill = root.getJSONObject("wind").get("chill").toString();
 			String humidity = root.getJSONObject("atmosphere").get("humidity").toString();
 			String visibility = root.getJSONObject("atmosphere").get("visibility").toString();
@@ -72,7 +72,7 @@ public class UpdateLocations {
 			Location location = locationService.findByWoeid(woeid).block();
 			if (location != null) {
 				if (pubDate != location.getPubDate()) {
-					location.setNombre(nombre);
+					location.setName(name);
 					location.setPubDate(pubDate);
 					location.setChill(chill);
 					location.setHumidity(humidity);

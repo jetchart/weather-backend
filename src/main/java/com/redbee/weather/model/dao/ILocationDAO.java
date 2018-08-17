@@ -10,7 +10,7 @@ import reactor.core.publisher.Mono;
 
 public interface ILocationDAO extends ReactiveMongoRepository<Location, String>{
 
-	public Flux<Location> findByNombreContaining(String nombre);
+	public Flux<Location> findByNameContaining(String name);
 	@Query("{ 'woeid' : ?0 }")
 	public Mono<Location> findByWoeid(String woeid);
 	

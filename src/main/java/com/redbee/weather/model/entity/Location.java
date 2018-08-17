@@ -16,7 +16,7 @@ public class Location implements Serializable {
 	
 	@Id
 	private String id;
-	private String nombre;
+	private String name;
 	private String woeid;
 	private String pubDate;
 	private String chill ;
@@ -35,11 +35,11 @@ public class Location implements Serializable {
 	public void setId(String id) {
 		this.id = id;
 	}
-	public String getNombre() {
-		return nombre;
+	public String getName() {
+		return name;
 	}
-	public void setNombre(String nombre) {
-		this.nombre = nombre;
+	public void setName(String name) {
+		this.name = name;
 	}
 	public String getWoeid() {
 		return woeid;

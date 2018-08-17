@@ -39,13 +39,14 @@ public class LocationServiceImpl implements ILocationService {
 	}
 
 	@Override
-	public void deleteById(String id) {
-		locationDAO.deleteById(id);
+	@Transactional(readOnly=false)
+	public Mono<Void> deleteById(String id) {
+		return locationDAO.deleteById(id);
 	}
 
 	@Override
-	public Flux<Location> findByNombreContaining(String nombre) {
-		return locationDAO.findByNombreContaining(nombre);
+	public Flux<Location> findByNameContaining(String name) {
+		return locationDAO.findByNameContaining(name);
 	}
 
 	@Override

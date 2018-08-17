@@ -6,7 +6,7 @@ import com.redbee.weather.model.entity.User;
 
 import reactor.core.publisher.Mono;
 
-public interface IUsuarioDAO extends ReactiveMongoRepository<User, String>{
+public interface IUserDAO extends ReactiveMongoRepository<User, String>{
 
 	public Mono<Void> deleteById(String id);	
 	

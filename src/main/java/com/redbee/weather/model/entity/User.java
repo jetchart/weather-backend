@@ -11,13 +11,9 @@ public class User {
 	
 	@Id
 	private String id;
-
 	private String username;
-
-	private String nombre;
-
-	private String apellido;
-
+	private String name;
+	private String surname;
 	private Date createAt;
 	
 	public String getId() {
@@ -32,17 +28,17 @@ public class User {
 	public void setUsername(String username) {
 		this.username = username;
 	}
-	public String getNombre() {
-		return nombre;
+	public String getName() {
+		return name;
 	}
-	public void setNombre(String nombre) {
-		this.nombre = nombre;
+	public void setName(String name) {
+		this.name = name;
 	}
-	public String getApellido() {
-		return apellido;
+	public String getSurname() {
+		return surname;
 	}
-	public void setApellido(String apellido) {
-		this.apellido = apellido;
+	public void setSurname(String surname) {
+		this.surname = surname;
 	}
 	public Date getCreateAt() {
 		return createAt;

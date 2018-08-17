@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.redbee.weather.model.dao.IUsuarioDAO;
+import com.redbee.weather.model.dao.IUserDAO;
 import com.redbee.weather.model.entity.User;
 
 import reactor.core.publisher.Flux;
@@ -14,7 +14,7 @@ import reactor.core.publisher.Mono;
 public class UsuarioServiceImpl implements IUsuarioService {
 
 	@Autowired
-	IUsuarioDAO usuarioDAO;
+	IUserDAO usuarioDAO;
 	
 	@Override
 	@Transactional(readOnly=true)

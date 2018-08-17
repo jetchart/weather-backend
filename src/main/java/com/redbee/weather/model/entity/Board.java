@@ -20,7 +20,7 @@ public class Board implements Serializable {
 	private String id;
 	@DBRef
 	private User user;
-	private String nombre;
+	private String name;
 	
 	public String getId() {
 		return id;
@@ -34,11 +34,11 @@ public class Board implements Serializable {
 	public User getUser() {
 		return user;
 	}
-	public void setNombre(String nombre) {
-		this.nombre = nombre;
+	public void setName(String name) {
+		this.name = name;
 	}
-	public String getNombre() {
-		return nombre;
+	public String getName() {
+		return name;
 	}
 		
 }
