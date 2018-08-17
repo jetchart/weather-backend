@@ -1,7 +1,10 @@
 package com.redbee.weather.service;
 
+import java.util.Date;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.redbee.weather.model.dao.ILocationDAO;
 import com.redbee.weather.model.entity.Location;
@@ -27,6 +30,10 @@ public class LocationServiceImpl implements ILocationService {
 
 	@Override
 	public Mono<Location> save(Location location) {
+		if (location.getId() != null) {
+			location.setUpdateAt(new Date());
+		}
+		location.setCreateAt(new Date());
 		return locationDAO.save(location);
 	}
 

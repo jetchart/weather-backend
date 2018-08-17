@@ -18,7 +18,13 @@ public class Location implements Serializable {
 	private String id;
 	private String nombre;
 	private String woeid;
+	private String chill ;
+	private String humidity;
+	private String visibility;
+	private String temperature;
+	private String text;
 	private Date createAt;
+	private Date updateAt;
 	
 	public String getId() {
 		return id;
@@ -43,6 +49,42 @@ public class Location implements Serializable {
 	}
 	public void setCreateAt(Date createAt) {
 		this.createAt = createAt;
+	}
+	public String getChill() {
+		return chill;
+	}
+	public void setChill(String chill) {
+		this.chill = chill;
+	}
+	public String getHumidity() {
+		return humidity;
+	}
+	public void setHumidity(String humidity) {
+		this.humidity = humidity;
+	}
+	public String getVisibility() {
+		return visibility;
+	}
+	public void setVisibility(String visibility) {
+		this.visibility = visibility;
+	}
+	public String getTemperature() {
+		return temperature;
+	}
+	public void setTemperature(String temperature) {
+		this.temperature = temperature;
+	}
+	public String getText() {
+		return text;
+	}
+	public void setText(String text) {
+		this.text = text;
+	}
+	public Date getUpdateAt() {
+		return updateAt;
+	}
+	public void setUpdateAt(Date updateAt) {
+		this.updateAt = updateAt;
 	}
 		
 }
