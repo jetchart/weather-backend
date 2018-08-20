@@ -2,6 +2,7 @@ package com.redbee.weather.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,6 +24,7 @@ import reactor.core.publisher.Mono;
 @RequestMapping("/api")
 //@CrossOrigin (origins = {"http://localhost:4200"})
 @CrossOrigin ()
+@Secured("ROLE_ADMIN")
 public class LocationRestController {
 
 	@Autowired

@@ -17,6 +17,8 @@ public interface IBoardLocationDAO extends ReactiveMongoRepository<BoardLocation
 	public Flux<BoardLocation> findByBoard(String boardId);
 	@Query("{ 'board.id' : ?0 } , { 'location.id' : ?1 }")
 	public Mono<BoardLocation> findByBoardAndLocation(Board board, Location location);
+	@Query("{ 'board.user.username' : ?0 }")
+	public Flux<BoardLocation> findByUsername(String username);
 	@Query("{ 'board.user.id' : ?0 }")
 	public Flux<BoardLocation> findByUser(String userId);
 	public Mono<Void> deleteById(String id);

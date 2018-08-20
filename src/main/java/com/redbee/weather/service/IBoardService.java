@@ -12,5 +12,6 @@ public interface IBoardService {
 	public Mono<Board> save(Board location);
 	public Mono<Void> deleteById(String id);
 	public Flux<Board> findByUser(String userId);
+	public Flux<Board> findByUsername(String username);
 	
 }

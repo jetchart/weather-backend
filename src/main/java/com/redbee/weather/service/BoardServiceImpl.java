@@ -36,6 +36,11 @@ public class BoardServiceImpl implements IBoardService {
 	}
 
 	@Override
+	public Flux<Board> findByUsername(String username) {
+		return boardDAO.findByUsername(username);
+	}
+
+	@Override
 	public Flux<Board> findByUser(String userId) {
 		return boardDAO.findByUser(userId);
 	}

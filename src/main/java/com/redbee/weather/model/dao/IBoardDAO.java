@@ -6,9 +6,12 @@ import org.springframework.data.mongodb.repository.ReactiveMongoRepository;
 import com.redbee.weather.model.entity.Board;
 
 import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 
 public interface IBoardDAO extends ReactiveMongoRepository<Board, String>{
 
+	@Query("{ 'user.username' : ?0 }")
+	public Flux<Board> findByUsername(String username);
 	@Query("{ 'user.id' : ?0 }")
 	public Flux<Board> findByUser(String userId);
 	

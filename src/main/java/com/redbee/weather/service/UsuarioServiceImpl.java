@@ -37,4 +37,9 @@ public class UsuarioServiceImpl implements IUsuarioService {
 		return usuarioDAO.deleteById(id);
 	}
 
+	@Override
+	public Mono<User> findByUsername(String username) {
+		return usuarioDAO.findByUsername(username);
+	}
+
 }

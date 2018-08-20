@@ -10,6 +10,7 @@ public interface IUsuarioService {
 	public Flux<User> findAll();
 	public Mono<User> findById(String id);
 	public Mono<User> save(User usuario);
-	public Mono<Void> deleteById(String id);	
+	public Mono<Void> deleteById(String id);
+	public Mono<User> findByUsername(String username);
 	
 }

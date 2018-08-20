@@ -28,8 +28,8 @@ public class BoardLocationServiceImpl implements IBoardLocationService {
 	}
 
 	@Override
-	public Flux<BoardLocation> findByUser(String userId) {
-		return boardLocationDAO.findByUser(userId);
+	public Flux<BoardLocation> findByUsername(String username) {
+		return boardLocationDAO.findByUsername(username);
 	}
 
 	@Override
@@ -40,6 +40,11 @@ public class BoardLocationServiceImpl implements IBoardLocationService {
 	@Override
 	public Mono<BoardLocation> save(BoardLocation boardLocation) {
 		return boardLocationDAO.save(boardLocation);
+	}
+
+	@Override
+	public Flux<BoardLocation> findByUser(String userId) {
+		return boardLocationDAO.findByUser(userId);
 	}
 
 //	@Override

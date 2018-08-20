@@ -1,5 +1,6 @@
 package com.redbee.weather.model.entity;
 
+import java.io.Serializable;
 import java.util.Date;
 
 import javax.persistence.Id;
@@ -7,13 +8,18 @@ import javax.persistence.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document(collection="users")
-public class User {
+public class User implements Serializable {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1998945461381308235L;
 	@Id
 	private String id;
 	private String username;
 	private String name;
 	private String surname;
+	private String password;
 	private Date createAt;
 	
 	public String getId() {
@@ -45,6 +51,12 @@ public class User {
 	}
 	public void setCreateAt(Date createAt) {
 		this.createAt = createAt;
+	}
+	public String getPassword() {
+		return password;
+	}
+	public void setPassword(String password) {
+		this.password = password;
 	}
 		
 }

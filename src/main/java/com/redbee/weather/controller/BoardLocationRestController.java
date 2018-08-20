@@ -2,6 +2,7 @@ package com.redbee.weather.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -24,6 +25,7 @@ import reactor.core.publisher.Mono;
 @RequestMapping("/api")
 //@CrossOrigin (origins = {"http://localhost:4200"})
 @CrossOrigin ()
+@Secured("ROLE_ADMIN")
 public class BoardLocationRestController {
 
 	@Autowired
@@ -42,6 +44,11 @@ public class BoardLocationRestController {
 	@GetMapping("/users/{userId}/boards/locations")
 	public Flux<BoardLocation> findByUser(@PathVariable String userId) {
 		return this.boardLocationService.findByUser(userId);
+	}
+	
+	@GetMapping("/users/username/{username}/boards/locations")
+	public Flux<BoardLocation> findByUsername(@PathVariable String username) {
+		return this.boardLocationService.findByUsername(username);
 	}
 	
 	@PostMapping("/boards/locations")
