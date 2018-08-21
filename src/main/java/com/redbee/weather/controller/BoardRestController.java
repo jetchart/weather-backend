@@ -64,6 +64,6 @@ public class BoardRestController {
 	
 	@GetMapping("/users/{userId}/boards")
 	public Flux<Board> findByUser(@PathVariable String userId) {
-		return this.boardService.findByUsername(userId);
+		return this.boardService.findByUser(userId);
 	}
 }
