@@ -9,6 +9,7 @@ import java.io.Writer;
 import java.net.Proxy;
 import java.net.URL;
 import java.net.URLConnection;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -20,6 +21,7 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.redbee.weather.model.entity.Forecast;
 import com.redbee.weather.model.entity.Location;
 import com.redbee.weather.service.ILocationService;
 import com.redbee.weather.service.IUsuarioService;
@@ -65,6 +67,27 @@ public class UpdateLocations {
 			String text = root.getJSONObject("item").getJSONObject("condition").get("text").toString();
 			String pubDate = root.getJSONObject("item").get("pubDate").toString();
 			
+			JSONArray forecastArray = root.getJSONObject("item").getJSONArray("forecast");
+			List<Forecast> forecasts = new ArrayList<Forecast>();
+			if (forecastArray != null) {
+				forecastArray.forEach(item -> {
+				    JSONObject obj = (JSONObject) item;
+				    Forecast forecast =  new Forecast();
+				    forecast.setDate(obj.get("date").toString());
+				    forecast.setDay(obj.get("day").toString());
+					if (Location.fahrenheit_code.equals(temperatureUnit.toUpperCase())) {
+						forecast.setHigh(String.valueOf(Integer.valueOf(obj.get("high").toString())-Location.celsius_diff));
+					    forecast.setLow(String.valueOf(Integer.valueOf(obj.get("low").toString())-Location.celsius_diff));
+					}else {
+					    forecast.setHigh(obj.get("high").toString());
+					    forecast.setLow(obj.get("low").toString());
+					}
+
+				    forecast.setText(obj.get("text").toString());
+				    forecasts.add(forecast);
+				});
+			}
+			
 			String woeid = root.getJSONObject("item").get("link").toString().split("/")[root.getJSONObject("item").get("link").toString().split("/").length-1].replace("city-", "");
 
 			Location location = locationService.findByWoeid(woeid).block();
@@ -81,6 +104,9 @@ public class UpdateLocations {
 						location.setTemperature(temperature);
 					}
 					location.setText(text);
+					if (forecasts.size() > 0) {
+						location.setForecasts(forecasts);
+					}
 					location.setEnabled(Boolean.TRUE);
 					Mono<Location> monoLocation = locationService.save(location);
 					monoLocation.subscribe();

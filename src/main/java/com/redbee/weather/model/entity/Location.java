@@ -2,6 +2,7 @@ package com.redbee.weather.model.entity;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Id;
 
@@ -24,6 +25,7 @@ public class Location implements Serializable {
 	private String visibility;
 	private String temperature;
 	private String text;
+	private List<Forecast> forecasts;
 	private Date createAt;
 	private Date updateAt;
 	private Boolean enabled;
@@ -84,6 +86,18 @@ public class Location implements Serializable {
 	}
 	public void setText(String text) {
 		this.text = text;
+	}
+	/**
+	 * @return the forecast
+	 */
+	public List<Forecast> getForecasts() {
+		return forecasts;
+	}
+	/**
+	 * @param forecast the forecast to set
+	 */
+	public void setForecasts(List<Forecast> forecasts) {
+		this.forecasts = forecasts;
 	}
 	public Date getUpdateAt() {
 		return updateAt;
