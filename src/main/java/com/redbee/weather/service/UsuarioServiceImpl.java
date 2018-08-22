@@ -29,6 +29,10 @@ public class UsuarioServiceImpl implements IUsuarioService {
 
 	@Override
 	public Mono<User> save(User usuario) {
+		Mono<User> existing = this.findByUsername(usuario.getUsername());
+		if (existing != null && existing.block() != null) {
+			return existing;
+		}
 		return usuarioDAO.save(usuario);
 	}
 
