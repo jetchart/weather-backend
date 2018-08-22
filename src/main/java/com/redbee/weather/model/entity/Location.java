@@ -26,8 +26,10 @@ public class Location implements Serializable {
 	private String text;
 	private Date createAt;
 	private Date updateAt;
+	private Boolean enabled;
 	
-	public final static Integer celsius = 32;
+	public final static String fahrenheit_code = "F";
+	public final static Integer celsius_diff = 32;
 	
 	public String getId() {
 		return id;
@@ -94,6 +96,12 @@ public class Location implements Serializable {
 	}
 	public void setPubDate(String pubDate) {
 		this.pubDate = pubDate;
+	}
+	public Boolean getEnabled() {
+		return enabled;
+	}
+	public void setEnabled(Boolean enabled) {
+		this.enabled = enabled;
 	}
 		
 }

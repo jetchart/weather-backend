@@ -31,10 +31,11 @@ public class LocationServiceImpl implements ILocationService {
 	@Override
 	@Transactional(readOnly=false)
 	public Mono<Location> save(Location location) {
-		if (location.getId() != null) {
-			location.setUpdateAt(new Date());
+		if (location.getId() == null) {
+			location.setCreateAt(new Date());
+			location.setEnabled(Boolean.FALSE);
 		}
-		location.setCreateAt(new Date());
+		location.setUpdateAt(new Date());
 		return locationDAO.save(location);
 	}
 
@@ -52,6 +53,11 @@ public class LocationServiceImpl implements ILocationService {
 	@Override
 	public Mono<Location> findByWoeid(String woeid) {
 		return locationDAO.findByWoeid(woeid);
+	}
+
+	@Override
+	public Flux<Location> findByEnabledTrue() {
+		return locationDAO.findByEnabledTrue();
 	}
 
 }

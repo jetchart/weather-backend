@@ -2,7 +2,6 @@ package com.redbee.weather.service;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
@@ -11,11 +10,11 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
-import org.springframework.security.jackson2.SimpleGrantedAuthorityMixin;
 import org.springframework.stereotype.Component;
 import org.springframework.util.Base64Utils;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.redbee.weather.model.entity.Authority;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtException;
@@ -78,16 +77,17 @@ public class JWTServiceImpl implements JWTService {
 	public Collection<? extends GrantedAuthority> getRoles(String token) throws IOException {
 		Object roles = getClaims(token).get("authorities");
 		
-//		Collection<? updatedAuthoritiesextends GrantedAuthority> authorities = Arrays
-//				.asList(new ObjectMapper().addMixIn(SimpleGrantedAuthority.class, SimpleGrantedAuthorityMixin.class)
-//						.readValue(roles.toString().getBytes(), SimpleGrantedAuthority[].class));
-
-		SimpleGrantedAuthority authority = new SimpleGrantedAuthority("ROLE_ADMIN");
-		List<SimpleGrantedAuthority> updatedAuthorities = new ArrayList<SimpleGrantedAuthority>();
-		updatedAuthorities.add(authority);
-		return updatedAuthorities;
+		Authority[] authorities = new ObjectMapper().readValue(roles.toString(), Authority[].class);
 		
-//		return authorities;
+		List<SimpleGrantedAuthority> updatedAuthorities = new ArrayList<SimpleGrantedAuthority>();
+		if (authorities != null) {	
+			for (Authority auth : authorities) {
+				SimpleGrantedAuthority authority = new SimpleGrantedAuthority(auth.getAuthority());
+				updatedAuthorities.add(authority);
+			}
+		}
+
+		return updatedAuthorities;
 	}
 
 	@Override

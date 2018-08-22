@@ -44,8 +44,8 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 		String password = obtainPassword(request);
 		
 		if(username != null && password !=null) {
-			logger.info("Username desde request parameter (form-data): " + username);
-			logger.info("Password desde request parameter (form-data): " + password);
+			//logger.info("Username desde request parameter (form-data): " + username);
+			//logger.info("Password desde request parameter (form-data): " + password);
 			
 		} else {
 			com.redbee.weather.model.entity.User user = null;
@@ -56,8 +56,8 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 				username = user.getUsername();
 				password = user.getPassword();
 				
-				logger.info("Username desde request InputStream (raw): " + username);
-				logger.info("Password desde request InputStream (raw): " + password);
+				//logger.info("Username desde request InputStream (raw): " + username);
+				//logger.info("Password desde request InputStream (raw): " + password);
 				
 			} catch (JsonParseException e) {
 				e.printStackTrace();
@@ -87,7 +87,7 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 		Map<String, Object> body = new HashMap<String, Object>();
 		body.put("token", token);
 		body.put("user", user);
-		body.put("mensaje", String.format("Hola %s, has iniciado sesión con éxito!", user.getUsername()) );
+		body.put("mensaje", String.format("Hello %s!", user.getUsername()) );
 		
 		response.getWriter().write(new ObjectMapper().writeValueAsString(body));
 		response.setStatus(200);

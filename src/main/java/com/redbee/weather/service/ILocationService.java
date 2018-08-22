@@ -8,6 +8,7 @@ import reactor.core.publisher.Mono;
 public interface ILocationService {
 
 	public Flux<Location> findAll();
+	public Flux<Location> findByEnabledTrue();
 	public Mono<Location> findById(String id);
 	public Mono<Location> findByWoeid(String woeid);
 	public Mono<Location> save(Location location);
