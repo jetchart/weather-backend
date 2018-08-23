@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.redbee.weather.model.entity.User;
 import com.redbee.weather.service.ILocationService;
-import com.redbee.weather.service.IUsuarioService;
+import com.redbee.weather.service.IUserService;
 
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
@@ -31,7 +31,7 @@ import reactor.core.publisher.Mono;
 public class UserRestController {
 
 	@Autowired
-	IUsuarioService usuarioService;
+	IUserService usuarioService;
 	@Autowired
 	ILocationService locationService;
 		
@@ -51,16 +51,6 @@ public class UserRestController {
 	public Mono<User> create(@RequestBody User usuario) {
 		usuario.setCreateAt(new Date());
 		return this.usuarioService.save(usuario);
-	}
-
-	@PutMapping("/users/{id}")
-	@ResponseStatus(HttpStatus.CREATED)
-	public Mono<User> update(@RequestBody User usuario, @PathVariable String id) {
-		Mono<User> currentUsuario = this.usuarioService.findById(id);
-//		currentUsuario.setNombre(usuario.getNombre());
-//		currentUsuario.setApellido(usuario.getApellido());
-//		this.usuarioService.save(currentUsuario);
-		return currentUsuario;
 	}
 
 	@DeleteMapping("/users/{id}")

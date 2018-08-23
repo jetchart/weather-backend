@@ -87,15 +87,9 @@ public class Location implements Serializable {
 	public void setText(String text) {
 		this.text = text;
 	}
-	/**
-	 * @return the forecast
-	 */
 	public List<Forecast> getForecasts() {
 		return forecasts;
 	}
-	/**
-	 * @param forecast the forecast to set
-	 */
 	public void setForecasts(List<Forecast> forecasts) {
 		this.forecasts = forecasts;
 	}

@@ -24,7 +24,7 @@ import io.jsonwebtoken.SignatureAlgorithm;
 @Component
 public class JWTServiceImpl implements JWTService {
 
-	public static final String SECRET = Base64Utils.encodeToString("Alguna.Clave.Secreta.123456".getBytes());
+	public static final String SECRET = Base64Utils.encodeToString("secretkey1234".getBytes());
 	
 	public static final long EXPIRATION_DATE = 14000000L;
 	public static final String TOKEN_PREFIX = "Bearer ";
@@ -49,11 +49,8 @@ public class JWTServiceImpl implements JWTService {
 
 	@Override
 	public boolean validate(String token) {
-
 		try {
-
 			getClaims(token);
-
 			return true;
 		} catch (JwtException | IllegalArgumentException e) {
 			return false;

@@ -1,7 +1,5 @@
 package com.redbee.weather.service;
 
-import org.springframework.data.mongodb.repository.Query;
-
 import com.redbee.weather.model.entity.Board;
 import com.redbee.weather.model.entity.BoardLocation;
 import com.redbee.weather.model.entity.Location;

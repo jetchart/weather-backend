@@ -22,7 +22,6 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.redbee.weather.service.JWTService;
 import com.redbee.weather.service.JWTServiceImpl;
-import com.redbee.weather.service.UsuarioServiceImpl;
 	
 public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 
@@ -44,9 +43,7 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 		String password = obtainPassword(request);
 		
 		if(username != null && password !=null) {
-			//logger.info("Username desde request parameter (form-data): " + username);
-			//logger.info("Password desde request parameter (form-data): " + password);
-			
+
 		} else {
 			com.redbee.weather.model.entity.User user = null;
 			try {
@@ -55,10 +52,7 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 				
 				username = user.getUsername();
 				password = user.getPassword();
-				
-				//logger.info("Username desde request InputStream (raw): " + username);
-				//logger.info("Password desde request InputStream (raw): " + password);
-				
+
 			} catch (JsonParseException e) {
 				e.printStackTrace();
 			} catch (JsonMappingException e) {
@@ -87,7 +81,7 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 		Map<String, Object> body = new HashMap<String, Object>();
 		body.put("token", token);
 		body.put("user", user);
-		body.put("mensaje", String.format("Hello %s!", user.getUsername()) );
+		body.put("message", String.format("Login success. Welcome %s!", user.getUsername()) );
 		
 		response.getWriter().write(new ObjectMapper().writeValueAsString(body));
 		response.setStatus(200);
@@ -99,7 +93,7 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 			AuthenticationException failed) throws IOException, ServletException {
 
 		Map<String, Object> body = new HashMap<String, Object>();
-		body.put("mensaje", "Error de autenticación: username o password incorrecto!");
+		body.put("message", "Username or password incorrect");
 		body.put("error", failed.getMessage());
 		
 		response.getWriter().write(new ObjectMapper().writeValueAsString(body));

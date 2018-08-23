@@ -5,7 +5,7 @@ import com.redbee.weather.model.entity.User;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
-public interface IUsuarioService {
+public interface IUserService {
 
 	public Flux<User> findAll();
 	public Mono<User> findById(String id);

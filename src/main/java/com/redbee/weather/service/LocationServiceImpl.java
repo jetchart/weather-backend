@@ -1,12 +1,15 @@
 package com.redbee.weather.service;
 
 import java.util.Date;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.redbee.weather.model.dao.IBoardLocationDAO;
 import com.redbee.weather.model.dao.ILocationDAO;
+import com.redbee.weather.model.entity.BoardLocation;
 import com.redbee.weather.model.entity.Location;
 
 import reactor.core.publisher.Flux;
@@ -17,6 +20,8 @@ public class LocationServiceImpl implements ILocationService {
 
 	@Autowired
 	ILocationDAO locationDAO;
+	@Autowired
+	IBoardLocationDAO boardLocationDAO;
 
 	@Override
 	public Flux<Location> findAll() {
@@ -46,6 +51,15 @@ public class LocationServiceImpl implements ILocationService {
 	@Override
 	@Transactional(readOnly=false)
 	public Mono<Void> deleteById(String id) {
+		//First: Delete associated BoardLocation 
+		Flux<BoardLocation> boardLocationsFlux = boardLocationDAO.findByLocation(id);
+		if (boardLocationsFlux.collectList() != null) {
+			List<BoardLocation> boardLocations = boardLocationsFlux.collectList().block();
+			if (boardLocations != null) {
+				boardLocationDAO.deleteAll(boardLocations);
+			}
+		}
+		//Finally: Delete Location
 		return locationDAO.deleteById(id);
 	}
 

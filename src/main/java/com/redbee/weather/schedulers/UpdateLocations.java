@@ -19,24 +19,22 @@ import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
-import org.springframework.transaction.annotation.Transactional;
 
 import com.redbee.weather.model.entity.Forecast;
 import com.redbee.weather.model.entity.Location;
 import com.redbee.weather.service.ILocationService;
-import com.redbee.weather.service.IUsuarioService;
+import com.redbee.weather.service.IUserService;
 
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 @Component
-@Transactional(readOnly=false)
 public class UpdateLocations {
 
 	@Autowired
 	ILocationService locationService;
 	@Autowired
-	IUsuarioService usuarioService;
+	IUserService usuarioService;
 	
 	@Scheduled(fixedRate = 60000)
 	public void updateLocations() throws IOException, JSONException {
