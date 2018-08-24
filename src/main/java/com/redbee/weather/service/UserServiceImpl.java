@@ -40,12 +40,15 @@ public class UserServiceImpl implements IUserService {
 	@Override
 	@Transactional(readOnly=false)
 	public Mono<User> save(User user) {
+		Mono<User> existing = this.findByUsername(user.getUsername());
 		if (user.getId() == null) {
-			Mono<User> existing = this.findByUsername(user.getUsername());
 			if (existing != null && existing.block() != null) {
 				return existing;
 			}
 			user.setCreateAt(new Date());
+		}
+		if (existing != null && existing.block() != null && !user.getId().equals(existing.block().getId())) {
+			return existing;
 		}
 		return usuarioDAO.save(user);
 	}
