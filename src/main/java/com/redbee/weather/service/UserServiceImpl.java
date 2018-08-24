@@ -1,5 +1,6 @@
 package com.redbee.weather.service;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +28,6 @@ public class UserServiceImpl implements IUserService {
 	IBoardDAO boardDAO;
 	
 	@Override
-	@Transactional(readOnly=true)
 	public Flux<User> findAll() {
 		return usuarioDAO.findAll();
 	}
@@ -38,15 +38,20 @@ public class UserServiceImpl implements IUserService {
 	}
 
 	@Override
-	public Mono<User> save(User usuario) {
-		Mono<User> existing = this.findByUsername(usuario.getUsername());
-		if (existing != null && existing.block() != null) {
-			return existing;
+	@Transactional(readOnly=false)
+	public Mono<User> save(User user) {
+		if (user.getId() == null) {
+			Mono<User> existing = this.findByUsername(user.getUsername());
+			if (existing != null && existing.block() != null) {
+				return existing;
+			}
+			user.setCreateAt(new Date());
 		}
-		return usuarioDAO.save(usuario);
+		return usuarioDAO.save(user);
 	}
 
 	@Override
+	@Transactional(readOnly=false)
 	public Mono<Void> deleteById(String id) {
 		//First: Delete associated BoardLocation 
 		Flux<BoardLocation> boardLocationsFlux = boardLocationDAO.findByUser(id);

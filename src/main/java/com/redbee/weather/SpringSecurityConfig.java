@@ -50,6 +50,8 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter{
 		build.inMemoryAuthentication()
         .withUser("jetchart").password("$2a$10$O9wxmH/AeyZZzIS09Wp8YOEMvFnbRVJ8B4dmAMVSGloR62lj.yqXG").roles("USER", "ADMIN")
         .and()
+        .withUser("admin").password("$2a$10$O9wxmH/AeyZZzIS09Wp8YOEMvFnbRVJ8B4dmAMVSGloR62lj.yqXG").roles("USER", "ADMIN")
+        .and()
         .passwordEncoder(passwordEncoder);
 	}
 	

@@ -36,11 +36,11 @@ public class LocationServiceImpl implements ILocationService {
 	@Override
 	@Transactional(readOnly=false)
 	public Mono<Location> save(Location location) {
-		Mono<Location> existing = this.findByWoeid(location.getWoeid());
-		if (existing != null && existing.block() != null) {
-			return existing;
-		}
 		if (location.getId() == null) {
+			Mono<Location> existing = this.findByWoeid(location.getWoeid());
+			if (existing != null && existing.block() != null) {
+				return existing;
+			}
 			location.setCreateAt(new Date());
 			location.setEnabled(Boolean.FALSE);
 		}

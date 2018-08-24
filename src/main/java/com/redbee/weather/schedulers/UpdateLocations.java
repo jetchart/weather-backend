@@ -34,9 +34,16 @@ public class UpdateLocations {
 	@Autowired
 	ILocationService locationService;
 	@Autowired
-	IUserService usuarioService;
+	IUserService userService;
 	
-	@Scheduled(fixedRate = 60000)
+	/**
+	 * Search all locations and update their data.
+	 * Also, for new locations (enabled = false), if results are found 
+	 * by WOEID, change the flag to enabled=true, otherwise eliminate them.
+	 * @throws IOException
+	 * @throws JSONException
+	 */
+	@Scheduled(fixedRate = 44000)
 	public void updateLocations() throws IOException, JSONException {
 
 		Date init = new Date();
@@ -49,16 +56,15 @@ public class UpdateLocations {
 		}
 		
 		String query = getQueryByWoeid(locations);
-		String resultado = retrieveRSS(query);
+		String result = retrieveRSS(query);
 		
-		JSONObject jsonObj = new JSONObject(resultado);
+		JSONObject jsonObj = new JSONObject(result);
 		JSONArray jsonRoot = jsonObj.getJSONObject("query").getJSONObject("results").getJSONArray("channel");
 		for (int i = 0; i < jsonRoot.length(); i++) {
 			try {
 			JSONObject root = jsonRoot.getJSONObject(i);
 			String temperatureUnit = root.getJSONObject("units").get("temperature").toString();
 			String name = root.getJSONObject("location").get("city").toString();
-			String chill = root.getJSONObject("wind").get("chill").toString();
 			String humidity = root.getJSONObject("atmosphere").get("humidity").toString();
 			String visibility = root.getJSONObject("atmosphere").get("visibility").toString();
 			String temperature = root.getJSONObject("item").getJSONObject("condition").get("temp").toString();
@@ -93,7 +99,6 @@ public class UpdateLocations {
 				if (pubDate != location.getPubDate()) {
 					location.setName(name);
 					location.setPubDate(pubDate);
-					location.setChill(chill);
 					location.setHumidity(humidity);
 					location.setVisibility(visibility);
 					if (Location.fahrenheit_code.equals(temperatureUnit.toUpperCase())) {
@@ -110,10 +115,10 @@ public class UpdateLocations {
 					monoLocation.subscribe();
 				}
 			}else {
-				System.out.println("NO EXISTE LOCATION CON WOEID="+woeid);
+				System.out.println("Not exists location with WOEID="+woeid);
 			}
 			}catch(Exception e ) {
-				System.out.println("Error al actualizar location: " + e.getMessage());
+				System.out.println("Error updating location: " + e.getMessage());
 			}
 		}
 		
